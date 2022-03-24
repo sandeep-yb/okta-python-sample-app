@@ -77,18 +77,18 @@ def callback():
         data=query_params,
         auth=(config["client_id"], config["client_secret"]),
     ).json()
-
+    print(exchange)
     # Get tokens and validate
     if not exchange.get("token_type"):
         return "Unsupported token type. Should be 'Bearer'.", 403
     access_token = exchange["access_token"]
     id_token = exchange["id_token"]
 
-    if not is_access_token_valid(access_token, config["issuer"]):
-        return "Access token is invalid", 403
+    # if not is_access_token_valid(access_token, config["issuer"]):
+    #     return "Access token is invalid", 403
 
-    if not is_id_token_valid(id_token, config["issuer"], config["client_id"], NONCE):
-        return "ID token is invalid", 403
+    # if not is_id_token_valid(id_token, config["issuer"], config["client_id"], NONCE):
+    #     return "ID token is invalid", 403
 
     # Authorization flow successful, get userinfo and login user
     userinfo_response = requests.get(config["userinfo_uri"],
